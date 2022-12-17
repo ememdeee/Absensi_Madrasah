@@ -66,3 +66,15 @@ Route::post('/dashboard2', [Dashboard2Controller::class, 'pilihUser'])->middlewa
 // git add .
 // git commit -m "First commit"
 // git push
+
+
+
+
+// ----------------Tutorial------------------
+
+// 1. Push (setelah mengedit, di up lagi)
+// click git icon in left bar (bellow search icon)
+// write your commit massage, and click check
+// click the three dot icon, and select "push to"
+// insert the url of git repo (for now: https://github.com/ememdeee/Absensi_Madrasah)
+// done 
