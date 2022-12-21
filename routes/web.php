@@ -68,13 +68,31 @@ Route::post('/dashboard2', [Dashboard2Controller::class, 'pilihUser'])->middlewa
 // git push
 
 
+// ----------------SOP------------------
+// 1. backup code first by adding "_backup" at their name before the "." (dot)
+
+
 
 
 // ----------------Tutorial------------------
-
 // 1. Push (setelah mengedit, di up lagi)
 // click git icon in left bar (bellow search icon)
 // write your commit massage, and click check
 // click the three dot icon, and select "push"
 // insert the url of git repo (for now: https://github.com/ememdeee/Absensi_Madrasah)
 // done 
+
+
+
+
+// ----------------What to do------------------
+// 1. Make sure the time is correct in the dashboard (waktu datang dan pulang) its look like something wrong (https://share.getcloudapp.com/rRu5k8Pb)
+// 2. delete tabel that not necessary (istirahat setelah istirahat)
+
+
+
+
+// ----------------What we done------------------
+// 1. up to github
+// 2. remove the "jarak" 
+// 2. remove tabel in view dashboard and dashboard advanced

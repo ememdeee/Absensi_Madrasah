@@ -82,6 +82,26 @@ class AbsenController extends Controller
 
             return view("absen.index",['jarak' => $jarak]);
         }
+        else if($presensi->waktu_istirahat === null){
+
+            //update baris yang sudah ada bukan nambah baru
+            $presensi->waktu_istirahat = Carbon::now();
+            $presensi->save();
+
+            $request->session()->flash('absenMasuk','Happy Istirahat');
+            return view("absen.index",['jarak' => $jarak]);
+        }
+
+        // cek apakah belom selesai istirahat
+        else if($presensi->waktu_setelah_istirahat === null){
+            //jika belom absen berarti dia baru datang
+ 
+            $presensi->waktu_setelah_istirahat = Carbon::now();
+            $presensi->save();
+
+            $request->session()->flash('absenMasuk','Happy work!');
+            return view("absen.index",['jarak' => $jarak]);
+        }
 
         // cek apakah belom pulang
         else if(!Presensi::where("user_id", Auth::id())->whereDate('waktu_pulang',Carbon::today())->exists()){

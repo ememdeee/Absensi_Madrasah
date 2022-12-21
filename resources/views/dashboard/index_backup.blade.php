@@ -15,6 +15,8 @@
                 <td><b>Nama</b></td>
                 <td><b>Email</b></td>
                 <td><b>Waktu Datang</b></td>
+                <td><b>Waktu Istirahat</b></td>
+                <td><b>Waktu Setelah Istirahat</b></td>
                 <td><b>Waktu Pulang</b></td>
                 <td><b>Lama di Kantor</b></td>
             </tr>
@@ -43,6 +45,18 @@
                     <td class="text-danger">Belum Absen</td>
                 @endif
     
+                @if ($presensi && $presensi->waktu_istirahat !== null)
+                    <td class="text-success">{{ $presensi->waktu_istirahat->format('d F Y; H:m:s') }}</td>
+                @else
+                    <td class="text-danger">Belum Istirahat</td>
+                @endif
+    
+                @if ($presensi && $presensi->waktu_setelah_istirahat !== null)
+                    <td class="text-success">{{ $presensi->waktu_setelah_istirahat->format('d F Y; H:m:s') }}</td>
+                @else
+                    <td class="text-danger">Belum balik Istirahat</td>
+                @endif
+    
                 @if ($presensi && $presensi->waktu_pulang !== null)
                     <td class="text-success">{{ $presensi->waktu_pulang->format('d F Y; H:m:s') }}</td>
                 @else
@@ -53,7 +67,9 @@
                     <?php 
                         $datangTimestamp = $presensi->waktu_datang->timestamp;
                         $pulangTimestamp = $presensi->waktu_pulang->timestamp;
-                        $diff = $pulangTimestamp - $datangTimestamp;
+                        $istirahatTimestamp = $presensi->waktu_istirahat->timestamp;
+                        $setelahistirahatTimestamp = $presensi->waktu_setelah_istirahat->timestamp;
+                        $diff = ($pulangTimestamp - $datangTimestamp)-($setelahistirahatTimestamp-$istirahatTimestamp);
                     ?>
                     <td class="text-success">{{ floor($diff/3600) }} jam, {{floor(fmod($diff,3600)/60)}} menit, {{fmod($diff,60)}} detik</td>
                     <!-- <td class="text-success">{{ $presensi->waktu_pulang->diffForHumans($presensi->waktu_datang) }}</td> -->
