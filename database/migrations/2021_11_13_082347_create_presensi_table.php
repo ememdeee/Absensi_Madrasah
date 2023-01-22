@@ -18,8 +18,6 @@ class CreatePresensiTable extends Migration
             $table->foreignId('user_id')->constrained();
             // $table->timestamps();
             $table->timestamp('waktu_datang')->nullable();
-            $table->timestamp('waktu_istirahat')->nullable();
-            $table->timestamp('waktu_setelah_istirahat')->nullable();
             $table->timestamp('waktu_pulang')->nullable();
         });
     }

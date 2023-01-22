@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard2Controller;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\UserInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,12 @@ Route::post('/dashboard', [DashboardController::class, 'pilihTanggal'])->middlew
 Route::get('/dashboard2', [Dashboard2Controller::class, 'index'])->middleware(['auth','role:admin']);
 Route::post('/dashboard2', [Dashboard2Controller::class, 'pilihUser'])->middleware(['auth','role:admin']);
 
+//halaman user Setting untuk mengupdate info spesifik user
+Route::get('/user', [UserInfoController::class, 'index'])->middleware(['auth','role:admin']);
+Route::post('/user', [UserInfoController::class, 'userInfo'])->middleware(['auth','role:admin']);
+Route::put('/user', [UserInfoController::class, 'updateData'])->middleware(['auth','role:admin']);
+
+
 //upload ke git hub atau update
 // git add .
 // git commit -m "First commit"
@@ -86,8 +93,11 @@ Route::post('/dashboard2', [Dashboard2Controller::class, 'pilihUser'])->middlewa
 
 
 // ----------------What to do------------------
-// 1. Make sure the time is correct in the dashboard (waktu datang dan pulang) its look like something wrong (https://share.getcloudapp.com/rRu5k8Pb)
-// 2. delete tabel that not necessary (istirahat setelah istirahat)
+// 1. Deploy
+// 2. make page for spesific contact
+// 3. add feature lupa pass
+// 4. add jumlah tidak masuk di dashboard
+// 5. add info di dashboard
 
 
 
@@ -95,4 +105,7 @@ Route::post('/dashboard2', [Dashboard2Controller::class, 'pilihUser'])->middlewa
 // ----------------What we done------------------
 // 1. up to github
 // 2. remove the "jarak" 
-// 2. remove tabel in view dashboard and dashboard advanced
+// 3. remove tabel in view dashboard and dashboard advanced
+// 4. delete tabel that not necessary (istirahat setelah istirahat)
+// 5. Make sure the time is correct in the dashboard (waktu datang dan pulang) its look like something wrong (https://share.getcloudapp.com/rRu5k8Pb)
+// 6. add total hadir di advance dashboard

@@ -19,6 +19,14 @@
     </div>
 @endif
 
+@if (session()->has('updateData'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session ('updateData') }}
+        <?php session()->forget('updateData'); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
 <p class="fs-1 fw-bold">Untuk mengetahui informasi per-user, lakukan pencarian by name.</p>
 
 <div class="badge bg-primary text-wrap mb-3" style="width: 21rem;">
@@ -30,6 +38,7 @@
     @if (session()->has('tampilkan'))
     <?php
     $totalJam=0;
+    $totalHadir=0;
     $totalAbsen=0;
     session()->forget('tampilkan');
     ?>
@@ -68,7 +77,10 @@
                 </td>
     
                 @if ($presensi && $presensi->waktu_datang !== null)
-                    <td class="text-success">{{ $presensi->waktu_datang->format('d F Y; H:m:s') }}</td>
+                    <?php
+                    $totalHadir=$totalHadir+1;
+                    ?>
+                    <td class="text-success">{{ $presensi->waktu_datang->format('d F Y, h:i:s A') }}</td>
                 @else
                     <?php
                     $totalAbsen=$totalAbsen+1;
@@ -77,7 +89,7 @@
                 @endif
     
                 @if ($presensi && $presensi->waktu_pulang !== null)
-                    <td class="text-success">{{ $presensi->waktu_pulang->format('d F Y; H:m:s') }}</td>
+                    <td class="text-success">{{ $presensi->waktu_pulang->format('d F Y, h:i:s A') }}</td>
                 @else
                     <td class="text-danger">Belum Pulang</td>
                 @endif
@@ -104,7 +116,8 @@
             @endforeach
         </table>
         <button type="button" class="btn btn-lg btn-primary" disabled>Total Jam: {{ floor($totalJam/3600) }} jam, {{floor(fmod($totalJam,3600)/60)}} menit, {{fmod($totalJam,60)}} detik</button>
-        <button type="button" class="btn btn-secondary btn-lg" disabled>Total Tidak Absen: {{ $totalAbsen }} kali</button>
+        <button type="button" class="btn btn-success btn-lg" disabled>Total Hadir: {{ $totalHadir }} kali</button>
+        <button type="button" class="btn btn-secondary btn-lg" disabled>Total Tidak Hadir: {{ $totalAbsen }} kali</button>
     </div>
     @endif
     <div class="mb-4">
@@ -116,11 +129,12 @@
         <BR>
         <label class="badge bg-primary text-wrap" style="width: 8rem;" for="userName">User Name:</label>
         <input type="userName" id="userName" name="userName" required value = "{{old('userName')}}">
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class="btn btn-primary btn-lg">
     </div>
 </form>
 
-<p class="fs-2 fw-normal">More Setting</p>
+<p class="fs-1 fw-bold">More Setting</p>
+<p class="fs-2 fw-normal">Change Location</p>
 <!-- gantilokasi -->
 <form action="/dashboard2" method="post">
     @csrf
@@ -128,35 +142,43 @@
     <input type="lat" id="lat" name="lat" required>
     <input type="lon" id="lon" name="lon" required>
     <!-- <input type="submit" name="gantiLok">
-    <p class="text-danger">Masukan lokasi yang valid!</p> -->
-
-    <!-- Button trigger modal -->
+        <p class="text-danger">Masukan lokasi yang valid!</p> -->
+        
+        <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Ganti Lokasi Kantor
+        Ganti Lokasi Kantor
     </button>
-
+    
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Perubahan Lokasi</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Perubahan Lokasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin? input akan disimpan dan tidak bisa dikembalikan lagi!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="gantiLok">Save changes</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            Apakah anda yakin? input akan disimpan dan tidak bisa dikembalikan lagi!
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="gantiLok">Save changes</button>
-        </div>
-        </div>
-    </div>
     </div>
 </form>
-<!-- 
-<h1>hallo</h1> -->
+<!-- <h1>hallo</h1> -->
 
+<p class="fs-2 fw-normal">User Info</p>
+<!-- userInfo -->
+<form action="/user" method="post">
+    @csrf
+    <label class="badge bg-primary text-wrap" style="width: 10rem;" for="userInfoId">Username</label>
+    <input type="number" id="userInfoId" name="userInfoId" required>
+        
+    <input type="submit" class="btn btn-primary btn-lg">
+</form>
 
 
 @endsection

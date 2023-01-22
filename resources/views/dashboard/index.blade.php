@@ -38,13 +38,13 @@
                 </td>
     
                 @if ($presensi && $presensi !== null)
-                    <td class="text-success">{{ $presensi->waktu_datang->format('d F Y; H:m:s') }}</td>
+                    <td class="text-success">{{ $presensi->waktu_datang->format('d F Y, h:i:s A') }}</td>
                 @else
                     <td class="text-danger">Belum Absen</td>
                 @endif
     
                 @if ($presensi && $presensi->waktu_pulang !== null)
-                    <td class="text-success">{{ $presensi->waktu_pulang->format('d F Y; H:m:s') }}</td>
+                    <td class="text-success">{{ $presensi->waktu_pulang->format('d F Y, h:i:s A') }}</td>
                 @else
                     <td class="text-danger">Belum Pulang</td>
                 @endif

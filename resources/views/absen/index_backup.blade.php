@@ -4,6 +4,10 @@
     $presensi = App\Presensi::whereDate('waktu_datang',Carbon\Carbon::today())->where('user_id',Illuminate\Support\Facades\Auth::id())->first();
     if ($presensi === null){
         $textButton = 'ABSEN MASUK';
+    } else if ($presensi->waktu_istirahat === null){
+        $textButton = 'ABSEN ISTIRAHAT';
+    } else if ($presensi->waktu_setelah_istirahat === null){
+        $textButton = "ABSEN SETELAH ISTIRAHAT";
     } else if ($presensi->waktu_pulang === null){
         $textButton = 'ABSEN PULANG';
     } else {
